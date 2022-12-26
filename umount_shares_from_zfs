@@ -1,0 +1,11 @@
+#!/bin/bash
+$ZPOOLNAME='zfs'
+while read mountpoint
+do
+     original=${mountpoint}
+     new=${mountpoint/${ZPOOLNAME}/disk1}
+     if [ -d ${original} ]
+     then
+         umount $new
+     fi
+done < <(zfs list -o mountpoint -t filesystem | sed '1,2d')
